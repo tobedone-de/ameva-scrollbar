@@ -2,7 +2,7 @@
 
 A framework-free overlay scrollbar with DOM-based tracks and thumbs that can be fully styled with CSS.
 
-It was built for AMEVA-style viewport and element scroll containers, including custom visual effects such as glow, blur, gradients, shadows, and glass-style overlays.
+It was built for ameva.app viewport and element scroll containers, including custom visual effects such as glow, blur, gradients, shadows, and glass-style overlays.
 
 ## Features
 
@@ -18,14 +18,14 @@ It was built for AMEVA-style viewport and element scroll containers, including c
 ## Install
 
 ```bash
-npm install @tobedone/ameva-scrollbar/
+npm install @tobedone-de/ameva-scrollbar/
 ```
 
 ## Usage
 
 ```js
-import { initializeScrollbar, refreshScrollbar } from '@tobedone/ameva-scrollbar/';
-import '@tobedone/ameva-scrollbar/styles.css';
+import { initializeScrollbar, refreshScrollbar } from '@tobedone-de/ameva-scrollbar/';
+import '@tobedone-de/ameva-scrollbar/styles.css';
 
 initializeScrollbar();
 ```
@@ -92,7 +92,7 @@ import {
     initializeScrollbar,
     initializeViewportScrollbar,
     refreshScrollbar,
-} from '@tobedone/ameva-scrollba';
+} from '@tobedone-de/ameva-scrollba';
 ```
 
 ## Notes
@@ -101,4 +101,4 @@ This package currently ships source ES modules and CSS directly. It has no runti
 
 ## License
 
-MIT © 2026 ToBeDone
+MIT © 2026 ToBeDone.de
