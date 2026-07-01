@@ -1,0 +1,279 @@
+.ameva-scrollbar,
+.ameva-scrollbar *,
+.ameva-scrollbar *::before,
+.ameva-scrollbar *::after {
+    box-sizing: border-box;
+}
+
+.ameva-scrollbar-host {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.ameva-scrollbar-host::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+}
+
+.ameva-scrollbar {
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 220ms ease,
+        transform 220ms ease;
+}
+
+.ameva-scrollbar--active {
+    opacity: 1;
+}
+
+.ameva-scrollbar--hidden,
+.ameva-scrollbar--initializing {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ameva-scrollbar--viewport {
+    position: fixed;
+    right: var(--ameva-scrollbar-viewport-right, 1px);
+    top: var(--ameva-scrollbar-viewport-top, 92px);
+    bottom: var(--ameva-scrollbar-viewport-bottom, 16px);
+    width: var(--ameva-scrollbar-hit-size, 16px);
+    z-index: var(--ameva-scrollbar-viewport-z-index, 60);
+}
+
+.ameva-scrollbar--element {
+    position: fixed;
+    z-index: var(--ameva-scrollbar-element-z-index, 4);
+}
+
+.ameva-scrollbar--element .ameva-scrollbar__track--vertical {
+    bottom: var(--ameva-scrollbar-element-vertical-inset, 0px);
+    right: var(--ameva-scrollbar-element-inline-end-inset, 0px);
+    top: var(--ameva-scrollbar-element-vertical-inset, 0px);
+}
+
+.ameva-scrollbar--element .ameva-scrollbar__track--horizontal {
+    bottom: 0;
+    left: var(--ameva-scrollbar-element-horizontal-inset, 0px);
+    right: var(--ameva-scrollbar-element-horizontal-inset, 0px);
+}
+
+.ameva-scrollbar__track {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: var(--ameva-scrollbar-radius, 999px);
+    box-shadow: none;
+    cursor: pointer;
+    display: block;
+    font: inherit;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: auto;
+    position: absolute;
+    touch-action: none;
+    transition:
+        opacity 220ms ease,
+        transform 180ms ease;
+    user-select: none;
+}
+
+.ameva-scrollbar--active .ameva-scrollbar__track {
+    opacity: 1;
+}
+
+.ameva-scrollbar--active .ameva-scrollbar__track--hidden,
+.ameva-scrollbar__track--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ameva-scrollbar__track::before {
+    background: linear-gradient(180deg, rgba(8, 16, 29, 0.82), rgba(12, 20, 37, 0.92));
+    border: 1px solid rgba(116, 241, 255, 0.14);
+    border-radius: var(--ameva-scrollbar-radius, 999px);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 0 20px rgba(92, 242, 255, 0.08);
+    content: '';
+    opacity: 0;
+    position: absolute;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease,
+        opacity 180ms ease,
+        width 180ms ease,
+        height 180ms ease;
+}
+
+.ameva-scrollbar__track--vertical {
+    bottom: 0;
+    right: 0;
+    top: 0;
+    width: var(--ameva-scrollbar-track-size, 12px);
+}
+
+.ameva-scrollbar__track--vertical::before {
+    bottom: 0;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 20px;
+}
+
+.ameva-scrollbar__track--horizontal {
+    bottom: 0;
+    height: var(--ameva-scrollbar-track-size, 12px);
+    left: 0;
+    right: 0;
+}
+
+.ameva-scrollbar__track--horizontal::before {
+    height: 1px;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ameva-scrollbar__thumb {
+    background: rgba(132, 246, 255, 0.96);
+    border-radius: var(--ameva-scrollbar-radius, 999px);
+    box-shadow: 0 0 6px rgba(92, 242, 255, 0.14);
+    display: block;
+    pointer-events: auto;
+    position: absolute;
+    touch-action: none;
+    transition:
+        box-shadow 180ms ease,
+        opacity 180ms ease;
+    user-select: none;
+    will-change: transform, width, height;
+}
+
+.ameva-scrollbar__thumb::after {
+    background: transparent;
+    border-radius: inherit;
+    box-shadow:
+        0 0 8px rgba(92, 242, 255, 0.12),
+        0 0 16px rgba(92, 242, 255, 0.08);
+    content: '';
+    inset: -2px;
+    opacity: var(--ameva-scrollbar-thumb-glow-opacity, 0.16);
+    pointer-events: none;
+    position: absolute;
+    transition:
+        opacity 220ms ease,
+        box-shadow 220ms ease,
+        transform 220ms ease;
+}
+
+.ameva-scrollbar__thumb--vertical {
+    left: 50%;
+    min-height: var(--ameva-scrollbar-thumb-min-size, 56px);
+    top: 0;
+    transform: translateX(-50%) translateY(var(--ameva-scrollbar-thumb-offset-y, 0));
+    transition:
+        box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        width 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 180ms ease;
+    width: 1px;
+}
+
+.ameva-scrollbar__thumb--horizontal {
+    height: 1px;
+    left: 0;
+    min-width: var(--ameva-scrollbar-thumb-min-size, 56px);
+    top: 50%;
+    transform: translateX(var(--ameva-scrollbar-thumb-offset-x, 0)) translateY(-50%);
+    transition:
+        box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        height 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 180ms ease;
+}
+
+.ameva-scrollbar__track--hovering,
+.ameva-scrollbar__track--dragging {
+    z-index: 1;
+}
+
+.ameva-scrollbar__track--hovering::before,
+.ameva-scrollbar__track--dragging::before,
+.ameva-scrollbar__track--pressing::before {
+    border-color: rgba(144, 247, 255, 0.24);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 0 24px rgba(92, 242, 255, 0.12);
+    opacity: 0.9;
+}
+
+.ameva-scrollbar__track--vertical.ameva-scrollbar__track--hovering::before,
+.ameva-scrollbar__track--vertical.ameva-scrollbar__track--dragging::before,
+.ameva-scrollbar__track--vertical.ameva-scrollbar__track--pressing::before {
+    width: 6px;
+}
+
+.ameva-scrollbar__track--horizontal.ameva-scrollbar__track--hovering::before,
+.ameva-scrollbar__track--horizontal.ameva-scrollbar__track--dragging::before,
+.ameva-scrollbar__track--horizontal.ameva-scrollbar__track--pressing::before {
+    height: 6px;
+}
+
+.ameva-scrollbar__track--hovering .ameva-scrollbar__thumb,
+.ameva-scrollbar__track--dragging .ameva-scrollbar__thumb,
+.ameva-scrollbar__track--pressing .ameva-scrollbar__thumb {
+    box-shadow:
+        0 0 8px rgba(92, 242, 255, 0.2),
+        0 0 14px rgba(92, 242, 255, 0.12);
+}
+
+.ameva-scrollbar__track--hovering .ameva-scrollbar__thumb::after,
+.ameva-scrollbar__track--dragging .ameva-scrollbar__thumb::after,
+.ameva-scrollbar__track--pressing .ameva-scrollbar__thumb::after {
+    --ameva-scrollbar-thumb-glow-opacity: 0.34;
+    box-shadow:
+        0 0 10px rgba(92, 242, 255, 0.18),
+        0 0 20px rgba(92, 242, 255, 0.1);
+}
+
+.ameva-scrollbar__track--vertical.ameva-scrollbar__track--hovering .ameva-scrollbar__thumb,
+.ameva-scrollbar__track--vertical.ameva-scrollbar__track--dragging .ameva-scrollbar__thumb,
+.ameva-scrollbar__track--vertical.ameva-scrollbar__track--pressing .ameva-scrollbar__thumb {
+    width: 4px;
+}
+
+.ameva-scrollbar__track--horizontal.ameva-scrollbar__track--hovering .ameva-scrollbar__thumb,
+.ameva-scrollbar__track--horizontal.ameva-scrollbar__track--dragging .ameva-scrollbar__thumb,
+.ameva-scrollbar__track--horizontal.ameva-scrollbar__track--pressing .ameva-scrollbar__thumb {
+    height: 4px;
+}
+
+@media (max-width: 860px),
+(pointer: coarse) {
+    .ameva-scrollbar-host--viewport {
+        scrollbar-width: auto;
+        -ms-overflow-style: auto;
+    }
+
+    .ameva-scrollbar-host--viewport::-webkit-scrollbar {
+        height: initial;
+        width: initial;
+    }
+
+    .ameva-scrollbar--viewport {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ameva-scrollbar,
+    .ameva-scrollbar *,
+    .ameva-scrollbar *::before,
+    .ameva-scrollbar *::after {
+        animation: none;
+        transition: none;
+    }
+}

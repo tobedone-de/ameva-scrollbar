@@ -1,0 +1,40 @@
+{
+  "name": "@tobedone/ameva-scrollbar",
+  "version": "0.1.0",
+  "description": "Custom overlay scrollbar for AMEVA-style scroll containers.",
+  "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./styles.css": "./src/styles.css"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "./src/styles.css"
+  ],
+  "keywords": [
+    "scrollbar",
+    "overlay-scrollbar",
+    "custom-scrollbar",
+    "ameva",
+    "tobedone"
+  ],
+  "author": "tobedone",
+  "homepage": "https://www.tobedone.de",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ToBeDoneDe/ameva-scrollbar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ToBeDoneDe/ameva-scrollbar/issues"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
