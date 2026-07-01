@@ -5,6 +5,7 @@ coverage/
 *.tgz
 .DS_Store
 .idea/
+.npmrc
 .vscode/
 npm-debug.log*
 yarn-debug.log*
