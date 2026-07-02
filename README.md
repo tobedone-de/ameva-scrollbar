@@ -4,6 +4,8 @@ A framework-free overlay scrollbar with DOM-based tracks and thumbs that can be 
 
 It was built for ameva.app viewport and element scroll containers, including custom visual effects such as glow, blur, gradients, shadows, and glass-style overlays.
 
+[View live demo](https://tobedone-de.github.io/ameva-scrollbar/)
+
 ## Features
 
 1. Framework-free JavaScript and CSS scrollbar.
