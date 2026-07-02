@@ -1,4 +1,4 @@
-import { AmevaScrollbar } from './assets/AmevaScrollbar.js';
+import { AmevaScrollbar } from './AmevaScrollbar.js';
 
 const instances = [];
 
