@@ -36,7 +36,7 @@
 .ameva-scrollbar--viewport {
     position: fixed;
     right: var(--ameva-scrollbar-viewport-right, 1px);
-    top: var(--ameva-scrollbar-viewport-top, 92px);
+    top: var(--ameva-scrollbar-viewport-top, 16px);
     bottom: var(--ameva-scrollbar-viewport-bottom, 16px);
     width: var(--ameva-scrollbar-hit-size, 16px);
     z-index: var(--ameva-scrollbar-viewport-z-index, 60);
@@ -270,6 +270,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .ameva-scrollbar,
     .ameva-scrollbar *,
     .ameva-scrollbar *::before,
