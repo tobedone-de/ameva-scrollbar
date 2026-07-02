@@ -14,12 +14,14 @@ export class AmevaScrollbar {
         scrollElement,
         viewport = false,
         horizontal = false,
+        horizontalWheel = false,
         vertical = true,
     }) {
         this.host = host;
         this.scrollElement = scrollElement;
         this.viewport = viewport;
         this.horizontalEnabled = horizontal;
+        this.horizontalWheelEnabled = horizontalWheel;
         this.verticalEnabled = vertical;
         this.dragState = null;
         this.frame = null;
@@ -491,7 +493,7 @@ export class AmevaScrollbar {
             this.root.style.height = `${Math.max(rect.height - verticalInset * 2, 0)}px`;
         } else if (horizontalOnly) {
             this.root.style.left = `${rect.left + horizontalInset}px`;
-            this.root.style.top = `${rect.bottom - hitAreaSize}px`;
+            this.root.style.top = `${rect.bottom - hitAreaSize - verticalInset}px`;
             this.root.style.width = `${Math.max(rect.width - horizontalInset * 2, 0)}px`;
             this.root.style.height = `${hitAreaSize}px`;
         } else {
@@ -677,6 +679,27 @@ export class AmevaScrollbar {
         axisRef.thumb.style.setProperty('--ameva-scrollbar-thumb-offset-x', `${thumbOffset}px`);
     }
 
+    resolveHorizontalWheelDelta(event, metrics = this.getMetrics()) {
+        if (event.deltaX !== 0) {
+            return event.deltaX;
+        }
+
+        if (
+            !this.horizontalWheelEnabled
+            || !this.horizontalEnabled
+            || event.deltaY === 0
+            || metrics.maxScrollLeft <= 0
+        ) {
+            return 0;
+        }
+
+        if (this.verticalEnabled && metrics.maxScrollTop > 0) {
+            return 0;
+        }
+
+        return event.deltaY;
+    }
+
     scrollToTrackPosition(axis, track, thumb, event, dragging = false) {
         const rect = track.getBoundingClientRect();
         const metrics = this.getMetrics();
@@ -715,7 +738,9 @@ export class AmevaScrollbar {
     }
 
     forwardWheel(axis, event) {
-        const delta = axis === 'horizontal' ? event.deltaX : event.deltaY;
+        const delta = axis === 'horizontal'
+            ? this.resolveHorizontalWheelDelta(event)
+            : event.deltaY;
 
         if (delta === 0) {
             return;
@@ -751,21 +776,25 @@ export class AmevaScrollbar {
             return;
         }
 
-        const primaryAxis = Math.abs(event.deltaY) >= Math.abs(event.deltaX)
+        const metrics = this.getMetrics();
+        const horizontalDelta = this.resolveHorizontalWheelDelta(event, metrics);
+        const verticalDelta = this.verticalEnabled && metrics.maxScrollTop > 0
+            ? event.deltaY
+            : 0;
+        const primaryAxis = Math.abs(verticalDelta) >= Math.abs(horizontalDelta)
             ? 'vertical'
             : 'horizontal';
 
-        if (this.canNestedScrollableConsumeWheel(target, event, primaryAxis)) {
+        if (this.canNestedScrollableConsumeWheel(target, verticalDelta, horizontalDelta, primaryAxis)) {
             return;
         }
 
-        const metrics = this.getMetrics();
         const canScrollVertically = this.verticalEnabled
             && metrics.maxScrollTop > 0
-            && event.deltaY !== 0;
+            && verticalDelta !== 0;
         const canScrollHorizontally = this.horizontalEnabled
             && metrics.maxScrollLeft > 0
-            && event.deltaX !== 0;
+            && horizontalDelta !== 0;
 
         if (!canScrollVertically && !canScrollHorizontally) {
             return;
@@ -773,8 +802,8 @@ export class AmevaScrollbar {
 
         event.preventDefault();
         this.scrollElement.scrollBy({
-            top: canScrollVertically ? event.deltaY : 0,
-            left: canScrollHorizontally ? event.deltaX : 0,
+            top: canScrollVertically ? verticalDelta : 0,
+            left: canScrollHorizontally ? horizontalDelta : 0,
             behavior: 'auto',
         });
     }
@@ -803,7 +832,7 @@ export class AmevaScrollbar {
         this.scrollElement.scrollBy(options);
     }
 
-    canNestedScrollableConsumeWheel(target, event, primaryAxis) {
+    canNestedScrollableConsumeWheel(target, verticalDelta, horizontalDelta, primaryAxis) {
         let currentElement = target;
 
         while (currentElement && currentElement !== this.host) {
@@ -820,7 +849,7 @@ export class AmevaScrollbar {
             const scrollableHorizontally = /(auto|scroll|overlay)/.test(overflowX) && currentElement.scrollWidth > currentElement.clientWidth;
 
             if (primaryAxis === 'vertical' && scrollableVertically) {
-                const nextScrollTop = currentElement.scrollTop + event.deltaY;
+                const nextScrollTop = currentElement.scrollTop + verticalDelta;
                 const maxScrollTop = currentElement.scrollHeight - currentElement.clientHeight;
 
                 if (nextScrollTop > 0 && nextScrollTop < maxScrollTop) {
@@ -829,7 +858,7 @@ export class AmevaScrollbar {
             }
 
             if (primaryAxis === 'horizontal' && scrollableHorizontally) {
-                const nextScrollLeft = currentElement.scrollLeft + event.deltaX;
+                const nextScrollLeft = currentElement.scrollLeft + horizontalDelta;
                 const maxScrollLeft = currentElement.scrollWidth - currentElement.clientWidth;
 
                 if (nextScrollLeft > 0 && nextScrollLeft < maxScrollLeft) {

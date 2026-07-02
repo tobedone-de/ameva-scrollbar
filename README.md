@@ -62,6 +62,7 @@ initializeScrollbar({
 ## Data Attributes
 
 - `data-amevascrollbar-x="true"` enables a horizontal element scrollbar.
+- `data-amevascrollbar-wheel-x="true"` forwards vertical mouse-wheel input to horizontal scrolling when no native horizontal wheel delta is present and the element does not scroll vertically.
 - `data-amevascrollbar-y="false"` disables the vertical element scrollbar.
 - `data-amevascrollbar-edge="flush"` aligns element scrollbar overlays to the host edge.
 - `data-amevascrollbar-width`, `data-amevascrollbar-size`, or `data-amevascrollbar-track-size` override visible track size.
@@ -71,6 +72,8 @@ initializeScrollbar({
 - `data-amevascrollbar-top`, `data-amevascrollbar-right`, and `data-amevascrollbar-bottom` control viewport scrollbar offsets.
 
 Generated DOM classes and CSS variables stay inside the `ameva-scrollbar` namespace.
+
+When creating instances programmatically, the same behavior can be enabled with `horizontalWheel: true`.
 
 ## Styling Hooks
 
@@ -92,7 +95,7 @@ import {
     initializeScrollbar,
     initializeViewportScrollbar,
     refreshScrollbar,
-} from '@tobedone-de/ameva-scrollba';
+} from '@tobedone-de/ameva-scrollbar';
 ```
 
 ## Notes

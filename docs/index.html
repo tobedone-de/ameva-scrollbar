@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMEVA Scrollbar Demo</title>
+    <link rel="stylesheet" href="../src/styles.css">
+    <link rel="stylesheet" href="./demo.css">
+</head>
+<body>
+    <main class="demo-page">
+        <section class="hero">
+            <p class="eyebrow">AMEVA Scrollbar</p>
+            <h1>CSS-stylable overlay scrollbar</h1>
+            <p>
+                A framework-free overlay scrollbar with DOM-based tracks and thumbs.
+                It can be styled freely with CSS effects such as glow, blur, gradients,
+                shadows and glass-style overlays.
+            </p>
+        </section>
+
+        <section class="demo-grid">
+            <article class="demo-card">
+                <h2>Vertical element scrollbar</h2>
+
+                <div class="scroll-box js-demo-scrollbar">
+                    <div class="scroll-content">
+                        <p>Layered UI elements can keep their native scrolling behavior while using a custom visual scrollbar.</p>
+                        <p>The scrollbar is rendered as DOM overlay and can be styled freely with CSS.</p>
+                        <p>This makes glow, blur, shadows and glass effects possible without relying on browser scrollbar styling.</p>
+                        <p>Content line 04</p>
+                        <p>Content line 05</p>
+                        <p>Content line 06</p>
+                        <p>Content line 07</p>
+                        <p>Content line 08</p>
+                        <p>Content line 09</p>
+                        <p>Content line 10</p>
+                        <p>Content line 11</p>
+                        <p>Content line 12</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="demo-card">
+                <h2>Horizontal and vertical scrollbar</h2>
+
+                <div
+                    class="scroll-box scroll-box--wide js-demo-scrollbar-x"
+                    data-amevascrollbar-inset-y="12"
+                >
+                    <div class="wide-content">
+                        <div class="wide-panel">Drums</div>
+                        <div class="wide-panel">Bass</div>
+                        <div class="wide-panel">Pad</div>
+                        <div class="wide-panel">Chords</div>
+                        <div class="wide-panel">Arp</div>
+                        <div class="wide-panel">Lead</div>
+                        <div class="wide-panel">FX</div>
+                        <div class="wide-panel">Texture</div>
+                    </div>
+                </div>
+                <p>In this demo, mouse wheel input is also forwarded horizontally.</p>
+            </article>
+        </section>
+
+        <section class="demo-card demo-card--full">
+            <h2>Viewport scrollbar</h2>
+            <p>
+                Scroll this page to see the fixed viewport scrollbar on the right side.
+                On touch devices the viewport scrollbar is hidden and native scrolling is restored.
+            </p>
+        </section>
+
+        <section class="spacer">
+            <p>Extra page height for viewport scrolling.</p>
+        </section>
+    </main>
+
+    <script type="module" src="./demo.js"></script>
+</body>
+</html>

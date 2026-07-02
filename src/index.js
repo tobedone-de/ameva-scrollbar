@@ -33,11 +33,13 @@ export const initializeElementScrollbar = (container = document, options = {}) =
         }
 
         const horizontal = element.dataset.amevascrollbarX === 'true';
+        const horizontalWheel = element.dataset.amevascrollbarWheelX === 'true';
         const vertical = element.dataset.amevascrollbarY !== 'false';
         const scrollbar = new AmevaScrollbar({
             host: element,
             scrollElement: element,
             horizontal,
+            horizontalWheel,
             vertical,
         });
 
@@ -89,6 +91,7 @@ export const initializeViewportScrollbar = (options = {}) => {
         host = document.body,
         scrollElement = document.scrollingElement || document.documentElement,
         horizontal = false,
+        horizontalWheel = false,
         vertical = true,
     } = options;
 
@@ -107,6 +110,7 @@ export const initializeViewportScrollbar = (options = {}) => {
             viewportScrollbarHost === host
             && viewportScrollbarInstance.scrollElement === scrollElement
             && viewportScrollbarInstance.horizontalEnabled === horizontal
+            && viewportScrollbarInstance.horizontalWheelEnabled === horizontalWheel
             && viewportScrollbarInstance.verticalEnabled === vertical
         ) {
             viewportScrollbarInstance.refresh();
@@ -122,6 +126,7 @@ export const initializeViewportScrollbar = (options = {}) => {
         scrollElement,
         viewport: true,
         horizontal,
+        horizontalWheel,
         vertical,
     });
 
