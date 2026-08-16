@@ -54,9 +54,14 @@
 }
 
 .ameva-scrollbar--element .ameva-scrollbar__track--horizontal {
-    bottom: var(--ameva-scrollbar-element-vertical-inset, 0px);
+    bottom: var(--ameva-scrollbar-element-horizontal-offset, 0px);
     left: var(--ameva-scrollbar-element-horizontal-inset, 0px);
     right: var(--ameva-scrollbar-element-horizontal-inset, 0px);
+}
+
+.ameva-scrollbar--element[data-amevascrollbar-x-position='top'] .ameva-scrollbar__track--horizontal {
+    bottom: auto;
+    top: var(--ameva-scrollbar-element-horizontal-offset, 0px);
 }
 
 .ameva-scrollbar__track {

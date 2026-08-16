@@ -6,7 +6,12 @@ const ELEMENT_TRACK_SIZE = 16;
 const ELEMENT_VISIBLE_TRACK_SIZE = 12;
 const VIEWPORT_VISIBLE_TRACK_SIZE = 16;
 const THUMB_DRAG_HIT_SLOP = 14;
+const DEFAULT_HORIZONTAL_POSITION = 'bottom';
 let ownerSequence = 0;
+
+const normalizeHorizontalPosition = (position) => (
+    position === 'top' ? 'top' : DEFAULT_HORIZONTAL_POSITION
+);
 
 export class AmevaScrollbar {
     constructor({
@@ -14,6 +19,8 @@ export class AmevaScrollbar {
         scrollElement,
         viewport = false,
         horizontal = false,
+        horizontalOffset = null,
+        horizontalPosition = DEFAULT_HORIZONTAL_POSITION,
         horizontalWheel = false,
         vertical = true,
     }) {
@@ -21,6 +28,8 @@ export class AmevaScrollbar {
         this.scrollElement = scrollElement;
         this.viewport = viewport;
         this.horizontalEnabled = horizontal;
+        this.horizontalOffset = Number.isFinite(horizontalOffset) ? horizontalOffset : null;
+        this.horizontalPosition = normalizeHorizontalPosition(horizontalPosition);
         this.horizontalWheelEnabled = horizontalWheel;
         this.verticalEnabled = vertical;
         this.dragState = null;
@@ -128,6 +137,19 @@ export class AmevaScrollbar {
             ?? THUMB_EDGE_PADDING;
     }
 
+    resolveHorizontalPosition() {
+        const configuredPosition = this.readDatasetValue('amevascrollbarXPosition')
+            ?? this.horizontalPosition;
+
+        return normalizeHorizontalPosition(configuredPosition);
+    }
+
+    resolveHorizontalOffset(fallbackOffset) {
+        return this.readDatasetNumber('amevascrollbarXOffset')
+            ?? this.horizontalOffset
+            ?? fallbackOffset;
+    }
+
     setOrClearRootStyleProperty(property, value) {
         if (value === null) {
             this.root.style.removeProperty(property);
@@ -143,6 +165,10 @@ export class AmevaScrollbar {
         this.root.style.setProperty('--ameva-scrollbar-hit-size', `${this.resolveHitAreaSize()}px`);
         this.root.style.setProperty('--ameva-scrollbar-thumb-min-size', `${this.resolveThumbMinSize()}px`);
         this.root.style.setProperty('--ameva-scrollbar-thumb-padding', `${this.resolveThumbPadding()}px`);
+
+        if (this.horizontal) {
+            this.root.dataset.amevascrollbarXPosition = this.resolveHorizontalPosition();
+        }
 
         if (!this.viewport) {
             return;
@@ -476,6 +502,7 @@ export class AmevaScrollbar {
         const rect = this.host.getBoundingClientRect();
         const resolvedZIndex = this.resolveOverlayZIndex();
         const { verticalInset, horizontalInset, inlineEndInset } = this.resolveElementInsets();
+        const horizontalOffset = this.resolveHorizontalOffset(verticalInset);
         const useFlushEdge = this.host.dataset.amevascrollbarEdge === 'flush';
         const hitAreaSize = this.resolveHitAreaSize();
         const resolvedInlineEndInset = inlineEndInset ?? (
@@ -492,10 +519,10 @@ export class AmevaScrollbar {
             this.root.style.width = `${hitAreaSize}px`;
             this.root.style.height = `${Math.max(rect.height - verticalInset * 2, 0)}px`;
         } else if (horizontalOnly) {
-            this.root.style.left = `${rect.left + horizontalInset}px`;
-            this.root.style.top = `${rect.bottom - hitAreaSize - verticalInset}px`;
-            this.root.style.width = `${Math.max(rect.width - horizontalInset * 2, 0)}px`;
-            this.root.style.height = `${hitAreaSize}px`;
+            this.root.style.left = `${rect.left}px`;
+            this.root.style.top = `${rect.top}px`;
+            this.root.style.width = `${rect.width}px`;
+            this.root.style.height = `${rect.height}px`;
         } else {
             this.root.style.left = `${rect.left}px`;
             this.root.style.top = `${rect.top}px`;
@@ -507,6 +534,7 @@ export class AmevaScrollbar {
         this.root.style.removeProperty('border-radius');
         this.root.style.setProperty('--ameva-scrollbar-element-vertical-inset', `${verticalInset}px`);
         this.root.style.setProperty('--ameva-scrollbar-element-horizontal-inset', `${horizontalInset}px`);
+        this.root.style.setProperty('--ameva-scrollbar-element-horizontal-offset', `${horizontalOffset}px`);
         this.root.style.setProperty('--ameva-scrollbar-element-inline-end-inset', `${resolvedInlineEndInset}px`);
     }
 

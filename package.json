@@ -1,6 +1,6 @@
 {
   "name": "@tobedone-de/ameva-scrollbar",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Framework-free overlay scrollbar with fully CSS-stylable tracks and thumbs for custom visual effects.",
   "type": "module",
   "main": "./src/index.js",

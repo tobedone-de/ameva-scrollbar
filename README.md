@@ -64,6 +64,8 @@ initializeScrollbar({
 ## Data Attributes
 
 - `data-amevascrollbar-x="true"` enables a horizontal element scrollbar.
+- `data-amevascrollbar-x-offset="5"` sets the horizontal scrollbar distance from the selected edge in pixels.
+- `data-amevascrollbar-x-position="top|bottom"` positions the horizontal element scrollbar. The default is `bottom`.
 - `data-amevascrollbar-wheel-x="true"` forwards vertical mouse-wheel input to horizontal scrolling when no native horizontal wheel delta is present and the element does not scroll vertically.
 - `data-amevascrollbar-y="false"` disables the vertical element scrollbar.
 - `data-amevascrollbar-edge="flush"` aligns element scrollbar overlays to the host edge.
@@ -75,13 +77,24 @@ initializeScrollbar({
 
 Generated DOM classes and CSS variables stay inside the `ameva-scrollbar` namespace.
 
-When creating instances programmatically, the same behavior can be enabled with `horizontalWheel: true`.
+When creating instances programmatically, use `horizontalOffset` for the edge distance and `horizontalPosition: 'top'` or `horizontalPosition: 'bottom'` for the edge. The same behavior as `data-amevascrollbar-wheel-x` can be enabled with `horizontalWheel: true`.
+
+```js
+const scrollbar = new AmevaScrollbar({
+    host: element,
+    scrollElement: element,
+    horizontal: true,
+    horizontalOffset: 5,
+    horizontalPosition: 'bottom',
+});
+```
 
 ## Styling Hooks
 
 - `--ameva-scrollbar-radius` controls track and thumb rounding.
 - `--ameva-scrollbar-viewport-z-index` controls the viewport scrollbar layer.
 - `--ameva-scrollbar-element-z-index` controls element scrollbar overlays.
+- `--ameva-scrollbar-element-horizontal-offset` controls the horizontal scrollbar distance from its selected edge.
 - `--ameva-scrollbar-track-size`, `--ameva-scrollbar-hit-size`, `--ameva-scrollbar-thumb-min-size`, and `--ameva-scrollbar-thumb-padding` are set from data attributes at runtime and can also be overridden in CSS.
 
 ## Exports

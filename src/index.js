@@ -20,6 +20,8 @@ export const getScopedElements = (container = document, selector = DEFAULT_ELEME
 
 export const initializeElementScrollbar = (container = document, options = {}) => {
     const selector = options.selector ?? DEFAULT_ELEMENT_SCROLLBAR_SELECTOR;
+    const horizontalOffset = options.horizontalOffset ?? null;
+    const horizontalPosition = options.horizontalPosition ?? 'bottom';
     const instances = [];
 
     getScopedElements(container, selector).forEach((element) => {
@@ -39,6 +41,8 @@ export const initializeElementScrollbar = (container = document, options = {}) =
             host: element,
             scrollElement: element,
             horizontal,
+            horizontalOffset,
+            horizontalPosition,
             horizontalWheel,
             vertical,
         });
@@ -91,6 +95,7 @@ export const initializeViewportScrollbar = (options = {}) => {
         host = document.body,
         scrollElement = document.scrollingElement || document.documentElement,
         horizontal = false,
+        horizontalPosition = 'bottom',
         horizontalWheel = false,
         vertical = true,
     } = options;
@@ -110,6 +115,7 @@ export const initializeViewportScrollbar = (options = {}) => {
             viewportScrollbarHost === host
             && viewportScrollbarInstance.scrollElement === scrollElement
             && viewportScrollbarInstance.horizontalEnabled === horizontal
+            && viewportScrollbarInstance.horizontalPosition === horizontalPosition
             && viewportScrollbarInstance.horizontalWheelEnabled === horizontalWheel
             && viewportScrollbarInstance.verticalEnabled === vertical
         ) {
@@ -126,6 +132,7 @@ export const initializeViewportScrollbar = (options = {}) => {
         scrollElement,
         viewport: true,
         horizontal,
+        horizontalPosition,
         horizontalWheel,
         vertical,
     });
