@@ -257,8 +257,8 @@
     height: 4px;
 }
 
-@media (max-width: 860px),
-(pointer: coarse) {
+/* Touch devices keep the native viewport scrollbar; with a mouse the overlay stays at every width. */
+@media (pointer: coarse) {
     .ameva-scrollbar-host--viewport {
         scrollbar-width: auto;
         -ms-overflow-style: auto;
