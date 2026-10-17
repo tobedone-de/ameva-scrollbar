@@ -257,19 +257,43 @@
     height: 4px;
 }
 
-/* Touch devices keep the native viewport scrollbar; with a mouse the overlay stays at every width. */
-@media (pointer: coarse) {
-    .ameva-scrollbar-host--viewport {
+/*
+ * Where the native viewport scrollbar takes over: by default in narrow windows and on touch devices;
+ * with initializeViewportScrollbar({ nativeScrollbar: 'touch' }) only on touch devices.
+ */
+@media (max-width: 860px),
+(pointer: coarse) {
+    :root:not(.ameva-scrollbar-native--touch).ameva-scrollbar-host--viewport,
+    :root:not(.ameva-scrollbar-native--touch) .ameva-scrollbar-host--viewport {
         scrollbar-width: auto;
         -ms-overflow-style: auto;
     }
 
-    .ameva-scrollbar-host--viewport::-webkit-scrollbar {
+    :root:not(.ameva-scrollbar-native--touch).ameva-scrollbar-host--viewport::-webkit-scrollbar,
+    :root:not(.ameva-scrollbar-native--touch) .ameva-scrollbar-host--viewport::-webkit-scrollbar {
         height: initial;
         width: initial;
     }
 
-    .ameva-scrollbar--viewport {
+    :root:not(.ameva-scrollbar-native--touch) .ameva-scrollbar--viewport {
+        display: none;
+    }
+}
+
+@media (pointer: coarse) {
+    :root.ameva-scrollbar-native--touch.ameva-scrollbar-host--viewport,
+    :root.ameva-scrollbar-native--touch .ameva-scrollbar-host--viewport {
+        scrollbar-width: auto;
+        -ms-overflow-style: auto;
+    }
+
+    :root.ameva-scrollbar-native--touch.ameva-scrollbar-host--viewport::-webkit-scrollbar,
+    :root.ameva-scrollbar-native--touch .ameva-scrollbar-host--viewport::-webkit-scrollbar {
+        height: initial;
+        width: initial;
+    }
+
+    :root.ameva-scrollbar-native--touch .ameva-scrollbar--viewport {
         display: none;
     }
 }

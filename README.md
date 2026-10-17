@@ -50,6 +50,8 @@ initializeScrollbar({
 
 The package does not auto-detect app-specific body classes. Pass `viewport: true` when a page-level scrollbar should be created.
 
+By default the native viewport scrollbar takes over in windows narrower than 860 pixels and on touch devices. Pass `viewport: { nativeScrollbar: 'touch' }` to keep the overlay at every width with a mouse and fall back to the native scrollbar on touch devices only.
+
 Initialize only the viewport scrollbar:
 
 ```js

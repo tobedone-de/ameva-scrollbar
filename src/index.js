@@ -98,6 +98,7 @@ export const initializeViewportScrollbar = (options = {}) => {
         horizontalPosition = 'bottom',
         horizontalWheel = false,
         vertical = true,
+        nativeScrollbar = 'narrow',
     } = options;
 
     if (!enabled) {
@@ -105,6 +106,9 @@ export const initializeViewportScrollbar = (options = {}) => {
 
         return null;
     }
+
+    // 'narrow' (default): the native scrollbar takes over in narrow windows and on touch devices; 'touch': only on touch devices.
+    document.documentElement.classList.toggle('ameva-scrollbar-native--touch', nativeScrollbar === 'touch');
 
     if (!(host instanceof HTMLElement)) {
         return null;
@@ -150,6 +154,7 @@ export const destroyViewportScrollbar = () => {
     }
 
     viewportScrollbarInstance.destroy();
+    document.documentElement.classList.remove('ameva-scrollbar-native--touch');
 
     if (viewportScrollbarHost) {
         delete viewportScrollbarHost.dataset.amevascrollbarViewportInitialized;
